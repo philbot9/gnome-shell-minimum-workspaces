@@ -35,10 +35,6 @@ function set_fixed_workspaces(number) {
 }
 
 function init() {
-    if (Meta.prefs_get_dynamic_workspaces()) {
-        this._schema = Convenience.getSettings();
-        set_fixed_workspaces(this._schema.get_int('minworkspaces'));
-    }
 }
 
 function enable() {
