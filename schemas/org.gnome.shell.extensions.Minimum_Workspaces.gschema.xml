@@ -1,0 +1,10 @@
+<schemalist gettext-domain="minimum-workspaces">
+  <schema id="org.gnome.shell.extensions.minimum-workspaces" path="/org/gnome/shell/extensions/minimum-workspaces/">
+    <key type="i" name="minworkspaces">
+      <default>4</default>
+      <range min="1" max="32"/>
+      <summary>Minimum Workspaces</summary>
+      <description>Defines the minimum number of workspaces.</description>
+    </key>
+  </schema>
+</schemalist>

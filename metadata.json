@@ -1,0 +1,6 @@
+{"shell-version": ["3.12.1"], 
+"uuid": "minimum-workspaces@philbot9.github", 
+"name": "Minimum Workspaces", 
+"description": "Set a minimum number of workspaces, while still allowing for dynamic workspaces beyond the minimum.",
+"settings-schema": "org.gnome.shell.extensions.minimum-workspaces"
+}
