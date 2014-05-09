@@ -31,15 +31,14 @@ function buildPrefsWidget() {
 
 
     let noWorkspaces = new Gtk.SpinButton({xalign: 0});
-            //animationTime.set_sensitive(true);
-            noWorkspaces.set_range(1, 32);
-            noWorkspaces.set_value(settings.get_int('minworkspaces'));
-            noWorkspaces.set_increments(1, 1);
+    noWorkspaces.set_range(1, 32);
+    noWorkspaces.set_value(settings.get_int('minworkspaces'));
+    noWorkspaces.set_increments(1, 1);
             
-            noWorkspaces.connect('value-changed', function(button){
-                let s = button.get_value_as_int();
-                settings.set_int('minworkspaces', s);
-            });
+    noWorkspaces.connect('value-changed', function(button){
+        let s = button.get_value_as_int();
+        settings.set_int('minworkspaces', s);
+    });
     
     settingLabel.set_tooltip_text("Define the minimum number of Workspaces.");
     noWorkspaces.set_tooltip_text("Define the minimum number of Workspaces.");
@@ -50,7 +49,6 @@ function buildPrefsWidget() {
     hbox.add(noWorkspaces);
     
     vbox.add(hbox);
-
 
     frame.add(vbox);
     frame.add(restartGnomeInfo);
