@@ -1,5 +1,6 @@
 {
 	"shell-version": [
+		"3.10",
 		"3.12"
 	], 
 	"uuid": "minimum-workspaces@philbot9.github.com",
