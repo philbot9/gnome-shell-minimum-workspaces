@@ -43,15 +43,12 @@ function buildPrefsWidget() {
     settingLabel.set_tooltip_text("Define the minimum number of Workspaces.");
     noWorkspaces.set_tooltip_text("Define the minimum number of Workspaces.");
 
-    let  restartGnomeInfo = new Gtk.Label({label: "<i>The extension needs to be disabled and re-enabled for changes to take effect.</i>", use_markup: true, xalign: 2,hexpand:true});
-
     hbox.pack_start(settingLabel, true, true, 0);
     hbox.add(noWorkspaces);
     
     vbox.add(hbox);
 
     frame.add(vbox);
-    frame.add(restartGnomeInfo);
     frame.show_all();
     return frame;
 }
