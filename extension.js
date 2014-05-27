@@ -11,6 +11,7 @@ const Convenience = Me.imports.convenience;
 const PreferencesObserver = new Lang.Class ({
     Name: 'PreferencesObserver',
     _init: function() {
+        //connect a change listener to the preference value of minworkspaces
         this._schema = Convenience.getSettings();
         this.prefsObsID = this._schema.connect("changed::" + 'minworkspaces',
                                Lang.bind(this, this._onValueChanged));
@@ -18,8 +19,8 @@ const PreferencesObserver = new Lang.Class ({
     _onValueChanged: function() {
         set_fixed_workspaces(this._schema.get_int('minworkspaces'));
     },
-
     _destroy: function() {
+        //disconnect the listener
         this._schema.disconnect(this.prefsObsID);
     }
 });
@@ -41,12 +42,12 @@ function set_fixed_workspaces(min_workspaces) {
             global.screen.get_workspace_by_index(i)._keepAliveId = true;    
         }
     } 
-    //if we already have enough workspaces make the first ones persistent
-    else {
+    else { //if we already have enough workspaces make the first ones persistent
         for(let i = 0; i < min_workspaces-1; i++) {
             global.screen.get_workspace_by_index(i)._keepAliveId = true;
         }
     }
+    //update the workspace view
     Main.wm._workspaceTracker._checkWorkspaces();
 }
 
