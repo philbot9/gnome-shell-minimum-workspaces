@@ -9,7 +9,7 @@ Any additional workspaces are still created and removed dynamically.
 
 ###Installation
 **1. Option:** 
-Install the extension via the Gnome Extensions website:
+Install the extension via the Gnome Extensions website:   
 [https://extensions.gnome.org/extension/820/minimum-workspaces/](https://extensions.gnome.org/extension/820/minimum-workspaces/)
 
 **2. Option:**
