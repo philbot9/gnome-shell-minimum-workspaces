@@ -4,7 +4,12 @@ const Gtk = imports.gi.Gtk;
 const Convenience = imports.misc.extensionUtils.getCurrentExtension().imports.convenience;
 const Lang = imports.lang;
 
-function init(){}
+const Gettext = imports.gettext.domain('minimum-workspaces');
+const _ = Gettext.gettext;
+
+function init(){
+    Convenience.initTranslations("minimum-workspaces");
+}
 
 function buildPrefsWidget() {
     let settings = Convenience.getSettings();
@@ -25,7 +30,7 @@ function buildPrefsWidget() {
     });
 
     let settingLabel = new Gtk.Label({
-        label: "Minimum number of Workspaces:",
+        label: _("Minimum number of Workspaces:"),
         xalign: 0
     });
 
@@ -40,8 +45,8 @@ function buildPrefsWidget() {
         settings.set_int('minworkspaces', s);
     });
     
-    settingLabel.set_tooltip_text("Define the minimum number of Workspaces.");
-    noWorkspaces.set_tooltip_text("Define the minimum number of Workspaces.");
+    settingLabel.set_tooltip_text(_("Define the minimum number of Workspaces."));
+    noWorkspaces.set_tooltip_text(_("Define the minimum number of Workspaces."));
 
     hbox.pack_start(settingLabel, true, true, 0);
     hbox.add(noWorkspaces);
