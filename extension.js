@@ -5,20 +5,38 @@ const Main = imports.ui.main;
 const Lang = imports.lang;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
+const MessageTray = imports.ui.messageTray;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const ExtensionSystem = imports.ui.extensionSystem;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
+const DisableNotification = new Lang.Class({
+    Name: 'DisableNotification',
+    Extends: MessageTray.Source,
+
+    _init: function() {
+        this.parent('', 'minimum-workspaces-disabled');
+        Main.messageTray.add(this);
+    },
+
+    doNotify: function() {
+        let notification = new MessageTray.Notification(this, "Minimum Workspaces extension disabled", "Workspaces are now static.");
+        this.notify(notification);
+    },
+});
+
 
 const MinimumWorkspaces = new Lang.Class({
     Name: 'MinimumWorkspaces',
     
     _init: function() {
+        
+        global.log("Setting Listeners");
         //connect a change listener to the extension preference value of minworkspaces
         this._preferencesSchema = Convenience.getSettings();
-        this._numWorkspacesListenerID = this._preferencesSchema.connect("changed::" + 'minworkspaces',
+        this._numWorkspacesListenerID = this._preferencesSchema.connect("changed::" + "minworkspaces",
             Lang.bind(this, this._onPreferenceChanged));
 
         
@@ -28,19 +46,20 @@ const MinimumWorkspaces = new Lang.Class({
         let schemaObj = schemaSource.lookup(schema, true);
 
         if (!schemaObj) {
-            global.log('Schema ' + schema + ' could not be found.');
+            global.log("Schema " + schema + " could not be found.");
         }
         else {
             this._settingsSchema = new Gio.Settings({
                 settings_schema: schemaObj
             });
 
+            global.log("Activating Dynamic Mode");
             //Activate dynamic workspaces in Gnome Shell Settings
-            if(!Meta.prefs_get_dynamic_workspaces()) {
-                this._settingsSchema.set_boolean('dynamic-workspaces', true);
-            }
+            this._settingsSchema.set_boolean("dynamic-workspaces", true);
+            global.log("Dynamic Mode: " + Meta.prefs_get_dynamic_workspaces());
+            
             //connect a change listener to the Gnome Shell settings for dynamic workspaces
-            this._workspaceSettingListenerID = this._settingsSchema.connect("changed::" + 'dynamic-workspaces', 
+            this._workspaceSettingListenerID = this._settingsSchema.connect("changed::" + "dynamic-workspaces", 
                 Lang.bind(this, this._onWorkspaceSettingChanged));
         }
         //set the minimum number of workspaces
@@ -54,13 +73,14 @@ const MinimumWorkspaces = new Lang.Class({
     },
 
     _onWorkspaceSettingChanged: function() {       
-        if(Meta.prefs_get_dynamic_workspaces()) {
-            this._setFixedWorkspaces();
-        } 
-        else {
+        if(!this._settingsSchema.get_boolean("dynamic-workspaces")) {
             //the user has selected to use static workspaces in the Gnome Shell Settings
             //So we disable this extension
-            this._setFixedWorkspaces(0);
+            global.log("User selected static workspaces. Disabling extension.");
+            
+            let notification = new DisableNotification();
+            notification.doNotify();
+            
             ExtensionSystem.disableExtension(Me.uuid);
         }
     },
@@ -72,7 +92,7 @@ const MinimumWorkspaces = new Lang.Class({
             min_workspaces = arguments[0];
         }
         else {
-            min_workspaces = this._preferencesSchema.get_int('minworkspaces');
+            min_workspaces = this._preferencesSchema.get_int("minworkspaces");
         }
 
         global.log("Setting workspaces: " + min_workspaces);
@@ -104,7 +124,6 @@ const MinimumWorkspaces = new Lang.Class({
 
     _destroy: function() {
         this._setFixedWorkspaces(0);
-
         //disconnect the listeners
         this._preferencesSchema.disconnect(this._numWorkspacesListenerID);
         this._settingsSchema.disconnect(this._workspaceSettingListenerID);
@@ -116,11 +135,11 @@ function init() {}
 let minimumWorkspaces = null;
 
 function enable() {
+    global.log("Enabling Extension");
     minimumWorkspaces = new MinimumWorkspaces();
-
-    global.log("ME: " + Me.uuid);
 }
 
 function disable() {
+    global.log("Disabling Extension");
     minimumWorkspaces._destroy();
 }
