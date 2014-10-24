@@ -24,3 +24,11 @@ msgstr "Minimale Anzahl an Arbeitsflächen:"
 #: prefs.js:48 prefs.js:49
 msgid "Define the minimum number of Workspaces."
 msgstr "Die minimale Anzahl an Arbeitsflächen festlegen."
+
+#: extension.js:35
+msgid "Minimum Workspaces extension disabled"
+msgstr "Minimum Workspaces Erweiterung deaktiviert"
+
+#: extension.js:35
+msgid "Workspaces are now static."
+msgstr "Arbeisflächen sind jetzt statisch."

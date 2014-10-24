@@ -7,6 +7,8 @@ const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
 const MessageTray = imports.ui.messageTray;
+const Gettext = imports.gettext.domain('minimum-workspaces');
+const _ = Gettext.gettext;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const ExtensionSystem = imports.ui.extensionSystem;
@@ -30,7 +32,7 @@ const DisableNotification = new Lang.Class({
         Main.messageTray.add(this);
     },
     doNotify: function() {
-        let notification = new MessageTray.Notification(this, "Minimum Workspaces extension disabled", "Workspaces are now static.");
+        let notification = new MessageTray.Notification(this, _("Minimum Workspaces extension disabled"), _("Workspaces are now static."));
         this.notify(notification);
     },
 });
@@ -168,7 +170,9 @@ const MinimumWorkspaces = new Lang.Class({
     }
 });
 
-function init() {}
+function init() {
+    Convenience.initTranslations("minimum-workspaces");
+}
 
 let minimumWorkspaces = null;
 function enable() {
