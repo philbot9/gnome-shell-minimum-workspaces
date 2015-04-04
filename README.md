@@ -1,6 +1,5 @@
 ## Minimum Workspaces - Gnome-Shell Extension  
-Set a minimum number of workspaces to exist at all times.
-Any additional workspaces are still created and removed dynamically.  
+Set a minimum number of workspaces to exist at all times. Any additional workspaces are still created and removed dynamically.  
 
 
 ### Supported versions of Gnome-Shell
