@@ -9,6 +9,7 @@ Set a minimum number of workspaces to exist at all times. Any additional workspa
 * 3.14
 * 3.16
 * 3.18
+* 3.20
 
 ### Installation
 
