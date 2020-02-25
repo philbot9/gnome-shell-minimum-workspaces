@@ -1,17 +1,8 @@
 {
-	"shell-version": [
-		"3.10",
-		"3.12",
-		"3.14",
-		"3.16",
-		"3.18",
-		"3.20",
-		"3.22",
-		"3.30"
-	],
-	"uuid": "minimum-workspaces@philbot9.github.com",
-	"name": "Minimum Workspaces",
-	"description": "Set a minimum number of workspaces, while still allowing for dynamic workspaces beyond the minimum.",
-	"url": "https://github.com/philbot9/gnome-shell-minimum-workspaces",
-	"settings-schema": "org.gnome.shell.extensions.minimum-workspaces"
+  "shell-version": ["3.30", "3.32", "3.34"],
+  "uuid": "minimum-workspaces@philbot9.github.com",
+  "name": "Minimum Workspaces",
+  "description": "Set a minimum number of workspaces, while still allowing for dynamic workspaces beyond the minimum.",
+  "url": "https://github.com/philbot9/gnome-shell-minimum-workspaces",
+  "settings-schema": "org.gnome.shell.extensions.minimum-workspaces"
 }
