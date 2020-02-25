@@ -37,6 +37,7 @@ const DisableNotification = new Lang.Class({
     },
 });
 
+const WorkspaceManager = global.screen || global.workspace_manager;
 
 const MinimumWorkspaces = new Lang.Class({
     Name: 'MinimumWorkspaces',
@@ -46,7 +47,7 @@ const MinimumWorkspaces = new Lang.Class({
         this._preferencesSchema = Convenience.getSettings();
         this._numWorkspacesListenerID = this._preferencesSchema.connect("changed::" + MINIMUM_WORKSPACES_KEY,
             Lang.bind(this, this._onPreferenceChanged));
-        
+
         //access the gnome shell settings via schemas
         let schemaSource = GioSSS.get_default();
         let schemaObj = schemaSource.lookup(GNOME_WORKSPACE_SETTINGS_SCHEMA, true);
@@ -135,25 +136,25 @@ const MinimumWorkspaces = new Lang.Class({
             min_workspaces = this._preferencesSchema.get_int("minworkspaces");
         }
 
-        let num_workspaces = global.screen.n_workspaces;
+        let num_workspaces = WorkspaceManager.n_workspaces;
 
         //first make all workspaces non-persistent
         for(let i = num_workspaces-1; i >= 0; i--) {
-            global.screen.get_workspace_by_index(i)._keepAliveId = false;
+            WorkspaceManager.get_workspace_by_index(i)._keepAliveId = false;
         }
 
         //if we have less than the minimum workspaces create new ones and make them persistent
         if(num_workspaces < min_workspaces-1) {
             for(let i = 0; i < min_workspaces-1; i++) {
-                if(i >= global.screen.n_workspaces) {
-                    global.screen.append_new_workspace(false, global.get_current_time());
+                if(i >= WorkspaceManager.n_workspaces) {
+                    WorkspaceManager.append_new_workspace(false, global.get_current_time());
                 }            
-                global.screen.get_workspace_by_index(i)._keepAliveId = true;    
+                WorkspaceManager.get_workspace_by_index(i)._keepAliveId = true;    
             }
         } 
         else { //if we already have enough workspaces make the first ones persistent
             for(let i = 0; i < min_workspaces-1; i++) {
-                global.screen.get_workspace_by_index(i)._keepAliveId = true;
+                WorkspaceManager.get_workspace_by_index(i)._keepAliveId = true;
             }
         }
         //update the workspace view
