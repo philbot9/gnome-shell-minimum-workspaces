@@ -15,8 +15,7 @@ function buildPrefsWidget() {
     let settings = Convenience.getSettings();
     
     let frame = new Gtk.Box({
-        orientation: Gtk.Orientation.VERTICAL,
-        border_width: 10
+        orientation: Gtk.Orientation.VERTICAL
     });
 
     let hbox = new Gtk.Box({
@@ -24,14 +23,11 @@ function buildPrefsWidget() {
     });
 
     let vbox = new Gtk.Box({
-        orientation: Gtk.Orientation.VERTICAL,
-        margin: 20,
-        margin_top: 10
+        orientation: Gtk.Orientation.VERTICAL
     });
 
     let settingLabel = new Gtk.Label({
-        label: _("Minimum number of Workspaces:"),
-        xalign: 0
+        label: _("Minimum number of Workspaces:")
     });
 
 
@@ -48,13 +44,12 @@ function buildPrefsWidget() {
     settingLabel.set_tooltip_text(_("Define the minimum number of Workspaces."));
     noWorkspaces.set_tooltip_text(_("Define the minimum number of Workspaces."));
 
-    hbox.pack_start(settingLabel, true, true, 0);
-    hbox.add(noWorkspaces);
+    hbox.prepend(settingLabel, true, true, 0);
+    hbox.append(noWorkspaces);
     
-    vbox.add(hbox);
+    vbox.append(hbox);
 
-    frame.add(vbox);
-    frame.show_all();
+    frame.append(vbox);
     return frame;
 }
 
