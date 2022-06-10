@@ -2,18 +2,20 @@
 
 Set a minimum number of workspaces to exist at all times. Any additional workspaces are still created and removed dynamically.
 
+[Fork from https://github.com/philbot9/gnome-shell-minimum-workspaces]
+
 ### Supported versions of Gnome-Shell
 
-3.30+
+40+
 
 ### Installation
 
-**Option 1:** Install the extension via the Gnome Extensions website:
-<https://extensions.gnome.org/extension/820/minimum-workspaces/>
-
-**Option 2:** Requires **git** to be installed.
+As this is a non-official fork until upstream version is updated, currently only install via git is suggested.
+Do not use this version if you do not dare to use git or want an official release.
 
 ```bash
 cd ~/.local/share/gnome-shell/extensions
-git clone https://github.com/philbot9/gnome-shell-minimum-workspaces.git minimum-workspaces@philbot9.github.com
+git clone https://github.com/theseer/gnome-shell-minimum-workspaces.git minimum-workspaces@philbot9.github.com
 ```
+
+Note: This will replace the original upstream version in case it got installed the same way.
