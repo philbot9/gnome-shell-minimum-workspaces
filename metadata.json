@@ -1,5 +1,5 @@
 {
-  "shell-version": ["3.30", "3.32", "3.34"],
+  "shell-version": ["3.30", "3.32", "3.34", "40", "41", "42"],
   "uuid": "minimum-workspaces@philbot9.github.com",
   "name": "Minimum Workspaces",
   "description": "Set a minimum number of workspaces, while still allowing for dynamic workspaces beyond the minimum.",
