@@ -9,6 +9,7 @@ const GLib = imports.gi.GLib;
 const MessageTray = imports.ui.messageTray;
 const Gettext = imports.gettext.domain('minimum-workspaces');
 const _ = Gettext.gettext;
+const GObject = imports.gi.GObject;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const ExtensionSystem = imports.ui.extensionSystem;
@@ -22,27 +23,27 @@ const GNOME_DYNAMIC_WORKSPACES_KEY = "dynamic-workspaces";
 
 const MINIMUM_WORKSPACES_KEY = "minworkspaces";
 
+const DisableNotification = GObject.registerClass({
+    GTypeName: 'DisableNotification',
+    }, class DisableNotificationClass extends MessageTray.Source {
 
-const DisableNotification = new Lang.Class({
-    Name: 'DisableNotification',
-    Extends: MessageTray.Source,
-
-    _init: function() {
-        this.parent('', 'minimum-workspaces-disabled');
+    _init() {
+        super._init('', 'minimum-workspaces-disabled');
         Main.messageTray.add(this);
-    },
-    doNotify: function() {
+    }
+    doNotify() {
         let notification = new MessageTray.Notification(this, _("Minimum Workspaces extension disabled"), _("Workspaces are now static."));
         this.notify(notification);
-    },
+    }
 });
 
 const WorkspaceManager = global.screen || global.workspace_manager;
 
-const MinimumWorkspaces = new Lang.Class({
-    Name: 'MinimumWorkspaces',
+const MinimumWorkspaces = GObject.registerClass({
+    GTypeName: 'MinimumWorkspaces',
+    }, class MinimumWorkspacesClass extends GObject.Object {
     
-    _init: function() {
+    _init() {
         //connect a change listener to the extension preference value of minworkspaces
         this._preferencesSchema = Convenience.getSettings();
         this._numWorkspacesListenerID = this._preferencesSchema.connect("changed::" + MINIMUM_WORKSPACES_KEY,
@@ -69,15 +70,15 @@ const MinimumWorkspaces = new Lang.Class({
         }
         //set the minimum number of workspaces
         this._setFixedWorkspaces();
-    },
+    }
 
-    _onPreferenceChanged: function() {
+    _onPreferenceChanged() {
         if(Meta.prefs_get_dynamic_workspaces()) {
             this._setFixedWorkspaces();
         }
-    },
+    }
 
-    _onWorkspaceSettingChanged: function() {       
+    _onWorkspaceSettingChanged() {       
         if(!this._settingsSchema.get_boolean("dynamic-workspaces")) {
         //the user has selected to use static workspaces, so we disable this extension
 
@@ -125,8 +126,8 @@ const MinimumWorkspaces = new Lang.Class({
             }
             this._destroy();
         }           
-    },
-    _setFixedWorkspaces: function() {    
+    }
+    _setFixedWorkspaces() {    
         let min_workspaces;
         //check whether a parameter was passed
         if(arguments[0] !== undefined) {
@@ -159,9 +160,9 @@ const MinimumWorkspaces = new Lang.Class({
         }
         //update the workspace view
         Main.wm._workspaceTracker._checkWorkspaces();
-    },
+    }
 
-    _destroy: function() {
+    _destroy() {
         //remove all fixed workspaces
         this._setFixedWorkspaces(0);
         
